@@ -41,6 +41,11 @@ const getOptionalInput = (name: string) => core.getInput(name) || undefined;
     (changeset) => changeset.releases.length > 0
   );
   let hasPublishScript = !!publishScript;
+  const createGithubReleasesInput = core.getInput('createGithubReleases');
+  let createGithubReleases = hasPublishScript;
+  if (createGithubReleasesInput !== undefined) {
+    createGithubReleases = createGithubReleasesInput === 'true';
+  }
 
   core.setOutput("published", "false");
   core.setOutput("publishedPackages", "[]");
@@ -84,10 +89,12 @@ const getOptionalInput = (name: string) => core.getInput(name) || undefined;
         );
       }
 
+      
+
       const result = await runPublish({
         script: publishScript,
         githubToken,
-        createGithubReleases: core.getBooleanInput("createGithubReleases"),
+        createGithubReleases,
       });
 
       if (result.published) {

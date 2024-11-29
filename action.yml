@@ -26,8 +26,11 @@ inputs:
     default: true
   createGithubReleases:
     description: "A boolean value to indicate whether to create Github releases after `publish` or not"
+    description: |
+      A boolean value to indicate whether to create Github releases or not. Defaults:
+      - `true` if `publish` is set.
+      - `false` if `publish` is not set.
     required: false
-    default: true
   branch:
     description: Sets the branch in which the action will run. Default to `github.ref_name` if not provided
     required: false
